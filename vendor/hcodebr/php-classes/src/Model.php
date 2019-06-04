@@ -1,7 +1,9 @@
 <?php
 
 namespace Hcode;
-
+/*
+** Classe geradora de getters e setters
+*/
 class Model
 {
     private $values = [];
