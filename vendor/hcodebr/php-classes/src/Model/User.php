@@ -15,6 +15,7 @@ class User extends Model
 
     public static function login($login, $password)
     {
+
         $sql = new Sql();
 
         $results = $sql->select("SELECT * FROM tb_users WHERE deslogin = :LOGIN", array(
@@ -187,19 +188,19 @@ class User extends Model
     public static function validForgotDecrypt($code)
     {
 
-        $idrecovery = openssl_decrypt(
+        (string)$idrecovery = openssl_decrypt(
             $code,
             'AES-128-CBC',
             User::SECRET,
             0,
             User::SECRET_IV
         );
+        $idrecovery = str_replace("\"", "", $idrecovery);
 
         $sql = new Sql();
 
         $results = $sql->select("
-            SELECT *
-            FROM tb_userspasswordsrecoveries a
+            SELECT * FROM tb_userspasswordsrecoveries a
             INNER JOIN tb_users b USING(iduser)
             INNER JOIN tb_persons c USING(idperson)
             WHERE a.idrecovery = :idrecovery
@@ -207,8 +208,6 @@ class User extends Model
             AND DATE_ADD(a.dtregister, INTERVAL 1 HOUR) >= NOW()", array(
                 ":idrecovery"=>$idrecovery
             ));
-
-        //print_r($results);exit;
 
         if(count($results) === 0){
             throw new \Exception("Não foi possível recuperar a senha . $idrecovery " . count($results));
