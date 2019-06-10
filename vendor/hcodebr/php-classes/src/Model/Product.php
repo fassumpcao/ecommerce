@@ -15,6 +15,17 @@ class Product extends Model
             ORDER BY desproduct");
     }
 
+    public static function checklist($list)
+    {
+        foreach ($list as &$row) {
+            $p = new Product();
+            $p->setData($row);
+            $row = $p->getValues();
+        }
+
+        return $list;
+    }
+
     public function save()
     {
         $sql = new Sql();
@@ -80,7 +91,7 @@ class Product extends Model
 
     public function setPhoto($file)
     {
-        
+
         if(!empty($file["name"])){
 
             $extension = explode('.', $file['name']);
