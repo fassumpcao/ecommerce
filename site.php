@@ -325,8 +325,9 @@ $app->post("/profile", function(){
 
     $user->update();
 
-    User::setSuccess("Dados atualizados.");
     $_SESSION[User::SESSION] = $user->getValues();
+    
+    User::setSuccess("Dados atualizados.");
 
     header("Location: /profile");
     exit;
