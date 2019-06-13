@@ -116,7 +116,7 @@ class User extends Model
     public function save()
     {
         $sql = new Sql();
-        
+
         $results = $sql->select("CALL sp_users_save(:desperson, :deslogin, :despassword, :desemail, :nrphone, :inadmin)", array(
             ":desperson"=>utf8_decode($this->getdesperson()),
             ":deslogin"=>$this->getdeslogin(),
@@ -173,7 +173,7 @@ class User extends Model
         ));
     }
 
-    public static function getForgot($email)
+    public static function getForgot($email, $inadmin = true)
     {
 
         $sql = new Sql();
@@ -213,7 +213,12 @@ class User extends Model
                     User::SECRET_IV
                 );
 
-                $link = "http://www.hcodecommerce.com.br/admin/forgot/reset?code=:$code";
+                if($inadmin === true){
+
+                    $link = "http://www.hcodecommerce.com.br/admin/forgot/reset?code=:$code";
+                } else {
+                    $link = "http://www.hcodecommerce.com.br/forgot/reset?code=:$code";
+                }
 
                 $mailer = new Mailer($data["desemail"], $data["desperson"], "Redefinir senha", "forgot", array(
                     "name"=>$data["desperson"],
