@@ -63,7 +63,7 @@ class Mailer {
         $this->mail->Username = Mailer::USERNAME;
 
         //Password to use for SMTP authentication
-        $this->mail->Password = "m85t@ng65";
+        $this->mail->Password = Mailer::PASSWORD;
 
         //Set who the message is to be sent from
         $this->mail->setFrom(Mailer::USERNAME, Mailer::NAME_FROM);
