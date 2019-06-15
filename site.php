@@ -216,7 +216,7 @@ $app->post("/checkout", function(){
 
     $cart = Cart::getFromSession();
 
-    $totals = $cart->getCalculateTotal();
+    $cart->getCalculateTotal();
 
     $order = new Order();
 
@@ -227,7 +227,7 @@ $app->post("/checkout", function(){
         'idstatus'=>OrderStatus::EM_ABERTO,
         'vltotal'=>$cart->getvltotal()
     ]);
-//'vltotal'=>$totals['vlprice'] + $cart->getvlfreight()
+
     $order->save();
 
     header("Location: /order/".$order->getidorder());
@@ -452,8 +452,9 @@ $app->get("/boleto/:idorder", function($idorder){
     $dias_de_prazo_para_pagamento = 10;
     $taxa_boleto = 0.00;
     $data_venc = date("d/m/Y", time() + ($dias_de_prazo_para_pagamento * 86400));  // Prazo de X dias OU informe data: "13/04/2006";
-    $valor_cobrado = $order->getvltotal(); // Valor - REGRA: Sem pontos na milhar e tanto faz com "." ou "," ou com 1 ou 2 ou sem casa decimal
-    $valor_cobrado = str_replace(",", ".",$valor_cobrado);
+    $valor_cobrado = formatPrice($order->getvltotal()); // Valor - REGRA: Sem pontos na milhar e tanto faz com "." ou "," ou com 1 ou 2 ou sem casa decimal
+    $valor_cobrado = str_replace(".", "", $valor_cobrado);
+    $valor_cobrado = str_replace(",", ".", $valor_cobrado);
     $valor_boleto=number_format($valor_cobrado+$taxa_boleto, 2, ',', '');
 
     $dadosboleto["nosso_numero"] = $order->getidorder();  // Nosso numero - REGRA: Máximo de 8 caracteres!
