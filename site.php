@@ -510,7 +510,7 @@ $app->get("/boleto/:idorder", function($idorder){
     require_once($path . "layout_itau.php");
 
 });
-<<<<<<< HEAD
+
 
 $app->get("/profile/orders", function(){
     User::verifyLogin(false);
@@ -609,5 +609,3 @@ $app->post("/profile/change-password", function(){
     header("Location: /profile/change-password");
     exit;
 });
-=======
->>>>>>> parent of fee0b92... Site - Meus Pedidos.
