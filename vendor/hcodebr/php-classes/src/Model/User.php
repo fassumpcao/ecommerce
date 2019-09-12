@@ -59,7 +59,7 @@ class User extends Model
             SELECT *
             FROM tb_users a
             INNER JOIN tb_persons b ON a.idperson = b.idperson
-            WHERE a.deslogin = :LOGIN
+            WHERE b.desemail = :LOGIN
             ", [
                 ":LOGIN"=>$login
         ]);

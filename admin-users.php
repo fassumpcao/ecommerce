@@ -49,7 +49,7 @@ $app->post("/admin/users/:iduser/password", function($iduser) {
 	User::setSuccess("Senha alterada.");
 	header("Location: /admin/users/$iduser/password");
 	exit;
-	
+
 });
 
 $app->get("/admin/users", function() {
@@ -154,7 +154,7 @@ $app->post("/admin/users/:iduser", function($iduser){
 
 	$user->get((int)$iduser);
 
-	$_POST["inadmin"] = (isset($_POST["inadmin"]))?1:0;
+	$_POST["inadmin"] = (isset($_POST["inadmin"])) ? 1 : 0;
 
 	$user->setData($_POST);
 
